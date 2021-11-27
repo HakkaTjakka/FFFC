@@ -4,9 +4,7 @@
 
     if (!(image_buffer[m]->image = NULL)) delete image_buffer[m]->image; -->     if (!(image_buffer[m]->image == NULL)) delete image_buffer[m]->image;
 
-AND 
-
-    https://github.com/HakkaTjakka/FFFC/blob/17a69d0c82357dc0f156ef9a64f9639fdfa8a162/src/FILE_FUNCTIONS.hpp#L8
+# AND: https://github.com/HakkaTjakka/FFFC/blob/17a69d0c82357dc0f156ef9a64f9639fdfa8a162/src/FILE_FUNCTIONS.hpp#L8
 
 Fast Threaded Image loader/converter (test phase)
 
