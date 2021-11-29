@@ -119,7 +119,10 @@ int main(int argc, char ** argv) {
             time=clock.getElapsedTime();
         }
 //        printf(" Converting %s to %s\n", in.c_str(), out.c_str());
-        if (to_do_index<to_do.size())
+        if (to_do_index<to_do.size()) {
+//bug??? When all ready it is exiting... don't!
+//change 1
+            wait_stat=0;
             if (clock.getElapsedTime().asMilliseconds()-timer.asMilliseconds() > 50 ) {
                 if ((to_do_index-total_images_converted < NUMBER_OF_SIMULTANIOUS_ACTIVE_THREADS)) {
                     one_to_do=to_do[to_do_index];
@@ -133,6 +136,7 @@ int main(int argc, char ** argv) {
                 }
                 timer=clock.getElapsedTime();
             }
+        }
     }
     printf("Stat: %d  Conv/idx/2do: %d/%d/%d  T/ok/free: %d/%d/%d",
             wait_stat,
@@ -215,21 +219,34 @@ void ACTION(char* directory, char* file) {
             struct to_do_list_struct one_to_do;
             one_to_do.filename=in;
             one_to_do.out=out;
+//change 1
+            static int count=999;
             if (!dont_overwrite) {
+//change 1
+                count=0;
                 to_do.push_back(one_to_do);
                 busy_print.lock();
                 printf("PUSHING %s\r", out.c_str());
                 busy_print.unlock();
             } else {
                 if (!file_exists(out.c_str())) {
+//change 1
+                    count=0;
                     to_do.push_back(one_to_do);
                     busy_print.lock();
                     printf("PUSHING %s\r", out.c_str());
                     busy_print.unlock();
                 } else {
-                    busy_print.lock();
-                    printf("EXISTS  %s\r", out.c_str());
-                    busy_print.unlock();
+//change 1
+                    static int fcount=0;
+                    fcount++;
+                    if (count==0) {
+                        busy_print.lock();
+                        printf("EXISTS (%d) %s\r",fcount, out.c_str());
+                        busy_print.unlock();
+                        count=1000;
+                    }
+                    count--;
                 }
             }
 
@@ -258,7 +275,8 @@ void ACTION(char* directory, char* file) {
             wait_stat=wait_for_all_loaded();
 
             passer_lock.lock();
-            sprintf(passer,"Stat: %d  Conv/idx/2do: %d/%d/%d  T/ok/free: %d/%d/%d  Err: %d/%d",
+//change 1
+            sprintf(passer,"\rStat: %d  Conv/idx/2do: %d/%d/%d  T/ok/free: %d/%d/%d  Err: %d/%d",
                     wait_stat,
                     total_images_converted,
                     to_do_index,
@@ -282,6 +300,7 @@ void ACTION(char* directory, char* file) {
     }
 }
 
+/*
 int hello() {
     sf::RenderWindow sfmlWin(sf::VideoMode(600, 360), "Hello World SFML Window");
     sf::Font font;
@@ -303,6 +322,7 @@ int hello() {
     }
     return 0;
 }
+*/
 
 /*
 void takes_a_function(void (*f)(void *), void *data) {

@@ -3943,7 +3943,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1634792055 source:e:\posters\fffc\src\fffc.cpp
+1638188463 source:e:\posters\fffc\src\fffc.cpp
 	<conio.h>
 	<SFML\Graphics.hpp>
 	<cassert>
@@ -3989,4 +3989,22 @@
 1634781731 e:\posters\fffc\src\threads.hpp
 
 1634774910 e:\posters\fffc\src\fffc.hpp
+
+1638049077 source:e:\posters\fffc\src\threads.cpp
+	<conio.h>
+	<SFML\Graphics.hpp>
+	<cassert>
+	<stdio.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	<time.h>
+	<iostream>
+	<io.h>
+	<fcntl.h>
+	<dirent.h>
+	<sys/stat.h>
+	<FILE_FUNCTIONS.hpp>
+	<THREADS.hpp>
 
